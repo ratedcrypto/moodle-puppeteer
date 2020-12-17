@@ -66,7 +66,7 @@ csv()
 (async () => {
   // Set launch options
   let launchOptions = {
-    headless: false,
+    headless: true,
     slowMo: 100,
     args: ['--start-maximized'],
   };
