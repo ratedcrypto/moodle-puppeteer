@@ -1,0 +1,25 @@
+{
+  "name": "puppeteer",
+  "version": "1.0.0",
+  "description": "Puppeteer script for creating course, restore quiz and enrol users",
+  "main": "index.js",
+  "dependencies": {
+    "csv-writer": "^1.6.0",
+    "csvtojson": "^2.0.10",
+    "moment": "^2.29.1",
+    "puppeteer": "^5.5.0"
+  },
+  "devDependencies": {},
+  "config": {
+    "siteurl": "https://eassess-loadtest.catalyst-au.net/my/?saml=off",
+    "courseprefix": "LoadTest",
+    "quizfilepath": "./assets/backups/150-mcq-test.mbz",
+    "assignedrole": "student",
+    "usersfilepath": "./assets/users/users-original.csv"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Rujul Trivedi",
+  "license": "ISC"
+}
