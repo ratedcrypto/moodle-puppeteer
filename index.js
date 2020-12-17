@@ -1,3 +1,4 @@
+require('dotenv').config();
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const moment = require('moment');
@@ -9,13 +10,15 @@ const { clickByText } = require('./util');
 console.log(`Execution commenced at ${moment().format()}`);
 
 // Configs
-const siteUrl = process.env.npm_package_config_siteurl;
+const siteUrl = process.env.SITE_URL;
+const userName = process.env.USERNAME;
+const password = process.env.PASSWORD;
 const timestamp = moment().unix();
-const courseFullName = `${process.env.npm_package_config_courseprefix}${timestamp}`;
+const courseFullName = `${process.env.COURSE_PREFIX}${timestamp}`;
 const courseShortName = `LA${timestamp}`;
-const role = process.env.npm_package_config_assignedrole;
-const restoreQuizFilePath = process.env.npm_package_config_quizfilepath;
-const inputUsersFilePath = process.env.npm_package_config_usersfilepath;
+const role = process.env.ASSIGNED_ROLE;
+const restoreQuizFilePath = process.env.QUIZ_FILE_PATH;
+const inputUsersFilePath = process.env.USERS_FILE_PATH;
 const outputUsersFilePath = './output/users.csv';
 const outputQuizURLFilePath = './output/url.txt';
 
@@ -27,6 +30,7 @@ console.log(`Quiz file: ${restoreQuizFilePath}`);
 console.log(`Users file: ${inputUsersFilePath}`);
 console.log(`Users CSV creation commenced at ${moment().format()}`);
 
+// Create users CSV
 const csvWriter = createCsvWriter({
   path: outputUsersFilePath,
   header: [
@@ -62,7 +66,7 @@ csv()
 (async () => {
   // Set launch options
   let launchOptions = {
-    headless: true,
+    headless: false,
     slowMo: 100,
     args: ['--start-maximized'],
   };
@@ -84,11 +88,9 @@ csv()
 
   // Login user
   await page.waitForSelector('#login');
-  await page.waitForTimeout(1000);
-  await page.type('#username', 'puppeteer');
-  await page.type('#password', 'Passw0rd!');
+  await page.type('#username', userName);
+  await page.type('#password', password);
   await page.click('#loginbtn');
-  await page.waitForTimeout(1000);
 
   // Open navigation drawer
   const navDrawer = await page.$('.nav-link');
@@ -148,7 +150,6 @@ csv()
   // Click restore button
   await page.waitForXPath('//*[@id="id_submitbutton"]');
   let restoreButton = await page.$x('//*[@id="id_submitbutton"]');
-  console.log('click now');
   await restoreButton[0].click();
   await page.waitForTimeout(2000);
   // Click continue button
