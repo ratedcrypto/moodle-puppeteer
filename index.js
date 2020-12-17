@@ -8,7 +8,7 @@ const { clickByText } = require('./util');
 // Magic begins
 console.log(`Execution commenced at ${moment().format()}`);
 
-// Envs
+// Configs
 const siteUrl = process.env.npm_package_config_siteurl;
 const timestamp = moment().unix();
 const courseFullName = `${process.env.npm_package_config_courseprefix}${timestamp}`;
@@ -62,8 +62,8 @@ csv()
 (async () => {
   // Set launch options
   let launchOptions = {
-    headless: false,
-    slowMo: 50,
+    headless: true,
+    slowMo: 100,
     args: ['--start-maximized'],
   };
 
