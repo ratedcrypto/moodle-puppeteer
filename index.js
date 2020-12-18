@@ -68,7 +68,7 @@ csv()
   let launchOptions = {
     headless: true,
     slowMo: 100,
-    args: ['--start-maximized'],
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--start-maximized'],
   };
 
   const browser = await puppeteer.launch(launchOptions);
@@ -76,6 +76,8 @@ csv()
 
   // Set default timeout
   await page.setDefaultTimeout(60000);
+  //Change default navigation time
+  await page.setDefaultNavigationTimeout(60000);
 
   // Set viewport and user agent (just in case for nice viewing)
   await page.setViewport({ width: 1366, height: 768 });
@@ -225,6 +227,9 @@ csv()
   // Click continue button
   await page.waitForSelector('button[type=submit]');
   await page.click('button[type=submit]');
+
+  //Implicit wait..
+  await page.waitForTimeout(20000);
 
   // Magic ends
   console.log(`Execution completed successfully at ${moment().format()}`);
