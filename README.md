@@ -21,6 +21,6 @@ npm install
 
 npm start
 
-SITE_URL=https://eassess-loadtest.catalyst-au.net/my/?saml=off COURSE_PREFIX=LoadTest npm start
+SITE_URL=https://moodle.org/my/?saml=off COURSE_PREFIX=LoadTest npm start
 
 ```
